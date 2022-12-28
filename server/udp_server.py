@@ -57,6 +57,7 @@ def run():
             ship = parse_ship(str(ship))
 
         step = 'player1'
+        print(step)
         while True:
             if len(ships[0][2]) == 0:
                 s.sendto(b'player2 win', players[0])
@@ -68,14 +69,20 @@ def run():
                 exit()
 
             if step == 'player1':
-                s.sendto(b'your step (example: a 5)', players[0])
-                data, _ = s.recvfrom(1024)
-                data = data.decode('UTF-8')
-                data = data.split()
-                data[0] = SYMBOLS[data[0]]
-                data[1] = int(data[1]) - 1
-                print('ships', ships)
-                print(data)
+                try:
+                    s.sendto(b'your step', players[0])
+                    data, _ = s.recvfrom(1024)
+                    if _:
+                        print(_)
+                    data = data.decode('UTF-8')
+                    print(data)
+                    data = data.split()
+                    data[0] = SYMBOLS[data[0]]
+                    data[1] = int(data[1]) - 1
+                    print('ships', ships)
+                    print(data)
+                except Exception as e:
+                    print(e)
 
                 if ships[1][0] == 0:
                     if int(data[1]) == ships[1][1] and int(data[0]) in ships[1][2]:
@@ -95,14 +102,18 @@ def run():
                 continue
 
             elif step == 'player2':
-                s.sendto(b'your step (example: a 5)', players[1])
-                data, _ = s.recvfrom(1024)
-                data = data.decode('UTF-8')
-                data = data.split()
-                data[0] = SYMBOLS[data[0]]
-                data[1] = int(data[1]) - 1
-                print('ships', ships)
-                print(data)
+                try:
+                    s.sendto(b'your step', players[1])
+                    data, _ = s.recvfrom(1024)
+                    print(_)
+                    data = data.decode('UTF-8')
+                    data = data.split()
+                    data[0] = SYMBOLS[data[0]]
+                    data[1] = int(data[1]) - 1
+                    print('ships', ships)
+                    print(data)
+                except Exception as e:
+                    print(e)
 
                 if ships[0][0] == 0:
                     if int(data[1]) == ships[0][1] and int(data[0]) in ships[0][2]:

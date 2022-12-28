@@ -31,11 +31,12 @@ def connect():
         while True:
             data = s.recvfrom(1024)
             if data[0].decode('UTF-8') == 'your step':
-                step = input('your step: ')
-                if step == 'exit':
-                    exit()
-
+                step = input('your step (example: a 5): ')
                 s.sendto(step.encode('UTF-8'), (HOST, PORT))
+            if data[0].decode('UTF-8') == 'player1 win' or data[0].decode('UTF-8') == 'player2 win':
+                print(data[0].decode('UTF-8'))
+                print('game over')
+                exit()
             else:
                 print(data[0].decode('UTF-8'))
 

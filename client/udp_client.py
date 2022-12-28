@@ -22,7 +22,7 @@ def connect():
         try:
             data = s.recvfrom(1024)
 
-            print('Обработано сервером:\n\n', generate_table(
+            print('server message:\n\n', generate_table(
                 spawn_ships(field, parse_ship(data))))
 
         except KeyboardInterrupt:
@@ -31,7 +31,7 @@ def connect():
         while True:
             data = s.recvfrom(1024)
             if data[0].decode('UTF-8') == 'your step':
-                step = input('Ваш ход: ')
+                step = input('your step: ')
                 if step == 'exit':
                     exit()
 
